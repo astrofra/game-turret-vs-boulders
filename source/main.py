@@ -19,12 +19,22 @@ def setup_game_level(plus=None):
 
 	scn.GetPhysicSystem().SetDebugVisuals(False)
 
+	# Create a camera
 	cam_matrix = hg.Matrix4.TransformationMatrix(hg.Vector3(0, 15, 3), hg.Vector3(radians(90), 0, 0))
-	plus.AddCamera(scn, cam_matrix)
+	cam = plus.AddCamera(scn, cam_matrix)
+
+	# Ambient Occlusion
+	pp_sao = hg.SAOPostProcess()
+	cam.AddComponent(pp_sao)
+	pp_sao.SetStrength(0.35)
+	pp_sao.SetStrength(0.35)
+	pp_sao.SetRadius(15.0)
+	pp_sao.SetSampleCount(8)
+
 	plus.AddLight(scn, hg.Matrix4.TransformationMatrix(hg.Vector3(-10, 10, 5), hg.Vector3(radians(55), radians(100), 0)), hg.LightModelSpot, 40.0, True)
 	env_blue = hg.Color.Blue + hg.Color.Green * 0.5
 	plus.AddLight(scn, hg.Matrix4.TranslationMatrix(hg.Vector3(10, -25, -5)), hg.LightModelPoint, 0.0, False, env_blue, hg.Color.Black)
-	plus.AddEnvironment(scn, hg.Color.Black, env_blue * 0.15)
+	plus.AddEnvironment(scn, hg.Color.Black, env_blue * 0.35)
 	ground = plus.AddPhysicPlane(scn)
 
 	return scn, ground
