@@ -292,4 +292,7 @@ def game():
 		plus.Flip()
 		plus.EndFrame()
 
-game()
+	return plus
+
+plus = game()
+plus.RenderUninit()
